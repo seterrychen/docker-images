@@ -30,10 +30,10 @@ ls -la $project_dir
 
 # create report directory
 report_dir=$KATALON_KATALON_ROOT_DIR/report
-if ! [ -d "$report_dir" ]; then
-  report_dir=$source_dir/report
+if [ ! -d $report_dir ]; then
+    report_dir="$KATALON_KATALON_ROOT_DIR/source/report-$(date '+%Y%m%d%H%M%S')"
+    mkdir -p $report_dir
 fi
-mkdir -p $report_dir
 
 # build command line
 args=("$KATALON_KATALON_INSTALL_DIR/katalon" "$@")
