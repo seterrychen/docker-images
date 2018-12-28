@@ -1,23 +1,18 @@
 #!/usr/bin/env bash
-
-set -x
 # Skip set -e to save the reports
 
 echo "Starting Katalon Studio"
-
 cat $KATALON_VERSION_FILE
-
-current_dir=$(pwd)
 
 # create tmp directory
 workspace_dir=/tmp/katalon_execute/workspace
 mkdir -p $workspace_dir
-chmod -R 777 $workspace_dir
 
 # source directory
 source_dir=$KATALON_KATALON_ROOT_DIR/source
 if ! [ -d "$source_dir" ]; then
-  source_dir=$(pwd)
+  echo '$source_dir is empty'
+  exit 1;
 fi
 
 # project source code
@@ -28,12 +23,9 @@ cp -r $source_dir/* $project_dir
 
 # create .classpath if not exist
 touch $project_dir/.classpath || exit
-chmod -R 777 $project_dir
 
-# remove generated file
-rm -rf $project_dir/bin
-rm -rf $project_dir/Libs
-
+# To list project content
+echo "Project content:"
 ls -la $project_dir
 
 # create report directory
@@ -50,16 +42,8 @@ args+=("-reportFolder=$report_dir")
 args+=("-projectPath=$project_dir")
 
 cd $workspace_dir
-
 xvfb-run -s "-screen 0 $DISPLAY_CONFIGURATION" "${args[@]}"
 ret_code=$?
 
-#clean up
-
-chown -R $(id -u):$(id -g) $report_dir
-chmod -R 777 $report_dir
-ls $report_dir
-
-cd $current_dir
-
+echo "Test finished and return code: $ret_code"
 exit $ret_code
