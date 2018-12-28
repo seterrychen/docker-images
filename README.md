@@ -102,3 +102,28 @@ docker run -t --rm -v "$(pwd)":/katalon/katalon/source katalonstudio/katalon kat
 ## Images built by community
 
 We also host image built by community. If you want to add one, please fire a Pull Request. For example, `katalonstudio/katalon:contrib_PR_15` refers to the image built based on #15. We do not maintain or take responsiblity for any consequence made by using these images, so please use them at your own risk.
+
+
+## run_QA_Site_Prebooking.sh
+
+Usage: [DISPLAY_SETTING=1024x768x24] run_QA_Site_Prebooking.sh source_folder [report_folder]
+
+example:
+
+```sh
+$ run_QA_Site_Prebooking.sh /workspace/project
+$ # the report will put at /workspace/project/report-xxxxxxx
+```
+
+To setup report folder
+
+```sh
+$ run_QA_Site_Prebooking.sh /workspace/project /tmp/report
+$ # the report will put at /tmp/report
+```
+
+To setup resolution
+
+```sh
+DISPLAY_SETTING=1920x1080x24 run_QA_Site_Prebooking.sh /workspace/project
+```
